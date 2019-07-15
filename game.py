@@ -46,7 +46,15 @@ def main():
                 run = False
 
             keys = pygame.key.get_pressed()
-            s.move(keys)
+            for key in keys:
+                if keys[pygame.K_LEFT]:
+                    s.move("left")
+                elif keys[pygame.K_RIGHT]:
+                    s.move("right")
+                elif keys[pygame.K_UP]:
+                    s.move("up")
+                elif keys[pygame.K_DOWN]:
+                    s.move("down")
     pygame.quit()
 
 
