@@ -9,6 +9,10 @@ width = 500
 height = width
 rows = 20
 
+pygame.init()
+win = pygame.display.set_mode((width, height))
+pygame.display.set_caption("snake")
+
 
 def draw_grid(w, rows, surface):
     size = w // rows
@@ -32,7 +36,6 @@ def redraw_window(surface):
 
 
 def random_snack(rows, item):
-
     positions = item.body
     while True:
         x = random.randrange(rows)
@@ -46,13 +49,9 @@ def random_snack(rows, item):
 
 def main():
     global s, snack
-    pygame.init()
-    win = pygame.display.set_mode((width, height))
-    pygame.display.set_caption("snake")
-
     s = snake.Snake((255, 0, 0), (10, 10))
-    run = True
     snack = cube.Cube(random_snack(rows, s))
+    run = True
     while run:
         keys = pygame.key.get_pressed()
         pygame.time.delay(100)
@@ -64,6 +63,10 @@ def main():
             if keys[pygame.K_a]:
                 s.add_cube()
                 break
+        if s.body[0].pos == snack.pos:
+            s.add_cube()
+            snack = cube.Cube(random_snack(rows, s))
+
         s.move()
         redraw_window(win)
     pygame.quit()
