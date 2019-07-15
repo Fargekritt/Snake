@@ -1,6 +1,6 @@
 class Cube():
     def __init__(self, start, dirnx=0, dirny=0, color=(255, 0, 0)):
-        pass
+        self.pos = start
 
     def move(self, dirnx, dirny):
         pass
