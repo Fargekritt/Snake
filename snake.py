@@ -58,5 +58,9 @@ class Snake(object):
     def add_cube(self):
         pass
 
-    def draw(self, surface):
-        pass
+    def draw(self):
+        for i, c in enumerate(self.body):
+            if i == 0:
+                c.draw(surface, True)
+            else:
+                c.draw(surface)
