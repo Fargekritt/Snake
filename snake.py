@@ -60,7 +60,12 @@ class Snake():
                     c.move(c.dirnx, c.dirny)
 
     def reset(self, pos):
-        pass
+        self.head = cube.Cube(pos)
+        self.body = []
+        self.body.append(self.head)
+        self.turns = {}
+        self.dirnx = 0
+        self.dirny = 0
 
     def add_cube(self):
         tail = self.body[-1]
