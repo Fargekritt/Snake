@@ -69,6 +69,10 @@ class Snake(object):
             self.body.append(cube.Cube((tail.pos[0]-1, tail.pos[1])))
         elif dx == -1 and dy == 0:
             self.body.append(cube.Cube((tail.pos[0]+1, tail.pos[1])))
+        elif dx == 0 and dy == 1:
+            self.body.append(cube.Cube((tail.pos[0], tail.pos[1]-1)))
+        elif dx == 0 and dy == -1:
+            self.body.append(cube.Cube((tail.pos[0], tail.pos[1]+1)))
 
         self.body[-1].dirnx = dx
         self.body[-1].dirny = dy
