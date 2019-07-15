@@ -11,27 +11,34 @@ class Snake(object):
         self.color = color
         self.head = cube.Cube(pos)
         self.body.append(self.head)
+        self.pos = pos
 
         self.dirnx = 0
         self.dirny = 0
 
-    def move(self, dir):
-        if dir == "left":
-            self.dirnx = -1
-            self.dirny = 0
-            self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
-        elif dir == "right":
-            self.dirnx = 1
-            self.dirny = 0
-            self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
-        elif dir == "up":
-            self.dirnx = 0
-            self.dirny = -1
-            self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
-        elif dir == "down":
-            self.dirnx = 0
-            self.dirny = 1
-            self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+    def move(self):
+        keys = pygame.key.get_pressed()
+
+        for key in keys:
+            if keys[pygame.K_LEFT]:
+                self.dirnx = -1
+                self.dirny = 0
+                self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+
+            elif keys[pygame.K_RIGHT]:
+                self.dirnx = 1
+                self.dirny = 0
+                self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+
+            elif keys[pygame.K_UP]:
+                self.dirnx = 0
+                self.dirny = -1
+                self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+
+            elif keys[pygame.K_DOWN]:
+                self.dirnx = 0
+                self.dirny = 1
+                self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
 
         for i, c in enumerate(self.body):
             p = c.pos[:]
@@ -56,9 +63,17 @@ class Snake(object):
         pass
 
     def add_cube(self):
-        pass
+        tail = self.body[-1]
+        dx, dy = tail.dirnx, tail.dirny
+        if dx == 1 and dy == 0:
+            self.body.append(cube.Cube((tail.pos[0]-1, tail.pos[1])))
+        elif dx == -1 and dy == 0:
+            self.body.append(cube.Cube((tail.pos[0]+1, tail.pos[1])))
 
-    def draw(self):
+        self.body[-1].dirnx = dx
+        self.body[-1].dirny = dy
+
+    def draw(self, surface):
         for i, c in enumerate(self.body):
             if i == 0:
                 c.draw(surface, True)
