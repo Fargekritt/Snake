@@ -49,12 +49,13 @@ def random_snack(rows, item):
 
 def main():
     global s, snack
+    clock = pygame.time.Clock()
     s = snake.Snake((255, 0, 0), (10, 10))
     snack = cube.Cube(random_snack(rows, s))
     run = True
     while run:
         keys = pygame.key.get_pressed()
-        pygame.time.delay(100)
+        clock.tick(10)
         redraw_window(win)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -66,7 +67,11 @@ def main():
         if s.body[0].pos == snack.pos:
             s.add_cube()
             snack = cube.Cube(random_snack(rows, s))
-
+        for x in range(len(s.body)):
+            if s.body[x].pos in list(map(lambda z: z.pos, s.body[x+1:])):
+                print('Score: ', len(s.body))
+                s.reset((10, 10))
+                break
         s.move()
         redraw_window(win)
     pygame.quit()
