@@ -72,6 +72,10 @@ def main():
                 print('Score: ', len(s.body))
                 s.reset((10, 10))
                 break
+        if s.head.pos[0] < 0 or s.head.pos[0] > rows-1 or s.head.pos[1] < 0 or s.head.pos[1] > rows - 1:
+            print(s.head.pos)
+            s.reset((10, 10))
+        print(s.head.pos)
         s.move()
         redraw_window(win)
     pygame.quit()
