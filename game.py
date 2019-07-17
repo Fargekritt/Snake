@@ -50,7 +50,7 @@ def random_snack(rows, item):
 def main():
     global s, snack
     clock = pygame.time.Clock()
-    s = snake.Snake((255, 0, 0), (10, 10))
+    s = snake.Snake((255, 0, 0), (10, 10), looping=True)
     snack = cube.Cube(random_snack(rows, s), color=(0, 255, 0))
     run = True
     while run:
@@ -73,9 +73,7 @@ def main():
                 s.reset((10, 10))
                 break
         if s.head.pos[0] < 0 or s.head.pos[0] > rows-1 or s.head.pos[1] < 0 or s.head.pos[1] > rows - 1:
-            print(s.head.pos)
             s.reset((10, 10))
-        print(s.head.pos)
         s.move()
         redraw_window(win)
     pygame.quit()
