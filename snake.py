@@ -7,12 +7,13 @@ class Snake():
     body = []
     turns = {}
 
-    def __init__(self, color, pos, looping=False):
+    def __init__(self, color, pos, looping=False, random_color=False):
         self.color = color
         self.head = cube.Cube(pos)
         self.body.append(self.head)
         self.pos = pos
         self.looping = looping
+        self.random_color = random_color
 
         self.dirnx = 0
         self.dirny = 0
@@ -51,12 +52,12 @@ class Snake():
             else:
                 if self.looping:
                     if c.dirnx == -1 and c.pos[0] <= 0:
-                        c.pos = (c.rows-1, c.pos[1])
-                    elif c.dirnx == 1 and c.pos[0] >= c.rows-1:
+                        c.pos = (c.rows - 1, c.pos[1])
+                    elif c.dirnx == 1 and c.pos[0] >= c.rows - 1:
                         c.pos = (0, c.pos[1])
                     elif c.dirny == -1 and c.pos[1] <= 0:
-                        c.pos = (c.pos[0], c.rows-1)
-                    elif c.dirny == 1 and c.pos[1] >= c.rows-1:
+                        c.pos = (c.pos[0], c.rows - 1)
+                    elif c.dirny == 1 and c.pos[1] >= c.rows - 1:
                         c.pos = (c.pos[0], 0)
                     else:
                         c.move(c.dirnx, c.dirny)
@@ -71,21 +72,26 @@ class Snake():
         self.dirnx = 0
         self.dirny = 0
 
-    def add_cube(self, cube_color):
+    def add_cube(self, cube_color=(255, 0, 0)):
         tail = self.body[-1]
+        if self.random_color:
+            r = random.randrange(255)
+            g = random.randrange(255)
+            b = random.randrange(255)
+            cube_color = (r, g, b)
         dx, dy = tail.dirnx, tail.dirny
         if dx == 1 and dy == 0:
             self.body.append(
-                cube.Cube((tail.pos[0]-1, tail.pos[1]), cube_color))
+                cube.Cube((tail.pos[0] - 1, tail.pos[1]), color=cube_color))
         elif dx == -1 and dy == 0:
             self.body.append(
-                cube.Cube((tail.pos[0]+1, tail.pos[1]), cube_color))
+                cube.Cube((tail.pos[0] + 1, tail.pos[1]), color=cube_color))
         elif dx == 0 and dy == 1:
             self.body.append(
-                cube.Cube((tail.pos[0], tail.pos[1]-1), cube_color))
+                cube.Cube((tail.pos[0], tail.pos[1] - 1), color=cube_color))
         elif dx == 0 and dy == -1:
             self.body.append(
-                cube.Cube((tail.pos[0], tail.pos[1]+1), cube_color))
+                cube.Cube((tail.pos[0], tail.pos[1] + 1), color=cube_color))
 
         self.body[-1].dirnx = dx
         self.body[-1].dirny = dy

@@ -50,7 +50,7 @@ def random_snack(rows, item):
 def main():
     global s, snack
     clock = pygame.time.Clock()
-    s = snake.Snake((255, 0, 0), (10, 10), looping=True)
+    s = snake.Snake((255, 0, 0), (10, 10), looping=False)
     snack = cube.Cube(random_snack(rows, s), color=(0, 255, 0))
     run = True
     while run:
@@ -65,14 +65,17 @@ def main():
                 s.add_cube()
                 break
         if s.body[0].pos == snack.pos:
-            s.add_cube()
-            snack = cube.Cube(random_snack(rows, s), color=(0, 255, 0))
+            s.add_cube(snack.color)
+            r = random.randrange(255)
+            g = random.randrange(255)
+            b = random.randrange(255)
+            snack = cube.Cube(random_snack(rows, s), color=(r, g, b))
         for x in range(len(s.body)):
-            if s.body[x].pos in list(map(lambda z: z.pos, s.body[x+1:])):
+            if s.body[x].pos in list(map(lambda z: z.pos, s.body[x + 1:])):
                 print('Score: ', len(s.body))
                 s.reset((10, 10))
                 break
-        if s.head.pos[0] < 0 or s.head.pos[0] > rows-1 or s.head.pos[1] < 0 or s.head.pos[1] > rows - 1:
+        if s.head.pos[0] < 0 or s.head.pos[0] > rows - 1 or s.head.pos[1] < 0 or s.head.pos[1] > rows - 1:
             s.reset((10, 10))
         s.move()
         redraw_window(win)
