@@ -7,13 +7,12 @@ class Snake():
     body = []
     turns = {}
 
-    def __init__(self, color, pos, looping=False, random_color=False):
+    def __init__(self, color, pos, looping=False):
         self.color = color
         self.head = cube.Cube(pos)
         self.body.append(self.head)
         self.pos = pos
         self.looping = looping
-        self.random_color = random_color
 
         self.dirnx = 0
         self.dirny = 0
@@ -72,26 +71,26 @@ class Snake():
         self.dirnx = 0
         self.dirny = 0
 
-    def add_cube(self, cube_color=(255, 0, 0)):
+    def add_cube(self, color, average=False):
+        if average:
+            r = (self.body[-1].color[0] + color[0]) // 2
+            g = (self.body[-1].color[1] + color[1]) // 2
+            b = (self.body[-1].color[2] + color[2]) // 2
+            color = (r, g, b)
         tail = self.body[-1]
-        if self.random_color:
-            r = random.randrange(255)
-            g = random.randrange(255)
-            b = random.randrange(255)
-            cube_color = (r, g, b)
         dx, dy = tail.dirnx, tail.dirny
         if dx == 1 and dy == 0:
             self.body.append(
-                cube.Cube((tail.pos[0] - 1, tail.pos[1]), color=cube_color))
+                cube.Cube((tail.pos[0] - 1, tail.pos[1]), color=color))
         elif dx == -1 and dy == 0:
             self.body.append(
-                cube.Cube((tail.pos[0] + 1, tail.pos[1]), color=cube_color))
+                cube.Cube((tail.pos[0] + 1, tail.pos[1]), color=color))
         elif dx == 0 and dy == 1:
             self.body.append(
-                cube.Cube((tail.pos[0], tail.pos[1] - 1), color=cube_color))
+                cube.Cube((tail.pos[0], tail.pos[1] - 1), color=color))
         elif dx == 0 and dy == -1:
             self.body.append(
-                cube.Cube((tail.pos[0], tail.pos[1] + 1), color=cube_color))
+                cube.Cube((tail.pos[0], tail.pos[1] + 1), color=color))
 
         self.body[-1].dirnx = dx
         self.body[-1].dirny = dy

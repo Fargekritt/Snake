@@ -49,10 +49,13 @@ def random_snack(rows, item):
 
 def main():
     global s, snack
+    first_color = (0, 255, 0)
+    second_color = (0, 0, 255)
     clock = pygame.time.Clock()
     s = snake.Snake((255, 0, 0), (10, 10), looping=False)
-    snack = cube.Cube(random_snack(rows, s), color=(0, 255, 0))
+    snack = cube.Cube(random_snack(rows, s), color=first_color)
     run = True
+
     while run:
         keys = pygame.key.get_pressed()
         clock.tick(10)
@@ -60,21 +63,27 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+        # press "a" to add cubes
         for key in keys:
             if keys[pygame.K_a]:
-                s.add_cube()
+                s.add_cube((255, 0, 0), average=True)
                 break
+
+        # if head is on snack add cube and make new snack
         if s.body[0].pos == snack.pos:
-            s.add_cube(snack.color)
-            r = random.randrange(255)
-            g = random.randrange(255)
-            b = random.randrange(255)
-            snack = cube.Cube(random_snack(rows, s), color=(r, g, b))
+            s.add_cube(snack.color, average=True)
+            if (len(s.body) % 10) < 5:
+                color = first_color
+            else:
+                color = second_color
+            snack = cube.Cube(random_snack(rows, s), color=color)
         for x in range(len(s.body)):
             if s.body[x].pos in list(map(lambda z: z.pos, s.body[x + 1:])):
                 print('Score: ', len(s.body))
                 s.reset((10, 10))
                 break
+        # lose cond
         if s.head.pos[0] < 0 or s.head.pos[0] > rows - 1 or s.head.pos[1] < 0 or s.head.pos[1] > rows - 1:
             s.reset((10, 10))
         s.move()

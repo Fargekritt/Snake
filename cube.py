@@ -1,14 +1,22 @@
+import random
+
 import pygame
 from game import width, rows
 
 
 class Cube():
 
-    def __init__(self, start, dirnx=0, dirny=0, color=(255, 0, 0)):
+    def __init__(self, start, dirnx=0, dirny=0, color=(255, 0, 0), random_color=False):
         self.pos = start
         self.dirnx = 0
         self.dirny = 0
-        self.color = color
+        if random_color:
+            self.r = random.randrange(255)
+            self.g = random.randrange(255)
+            self.b = random.randrange(255)
+            self.color = (self.r, self.g, self.b)
+        else:
+            self.color = color
         self.width = width
         self.rows = rows
 
