@@ -45,7 +45,8 @@ def random_snack(rows, item):
         else:
             break
     return (x, y)
-
+def initialization():
+    pass
 
 def main():
     global s, snack
