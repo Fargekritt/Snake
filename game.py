@@ -68,16 +68,17 @@ def main():
         for key in keys:
             if keys[pygame.K_a]:
                 s.add_cube((255, 0, 0), average=True)
+                clock.tick(2)
                 break
 
         # if head is on snack add cube and make new snack
         if s.body[0].pos == snack.pos:
-            s.add_cube(snack.color, average=True)
+            s.add_cube(snack.color)
             if (len(s.body) % 10) < 5:
                 color = first_color
             else:
                 color = second_color
-            snack = cube.Cube(random_snack(rows, s), color=color)
+            snack = cube.Cube(random_snack(rows, s), random_color=True)
         for x in range(len(s.body)):
             if s.body[x].pos in list(map(lambda z: z.pos, s.body[x + 1:])):
                 print('Score: ', len(s.body))
