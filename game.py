@@ -54,22 +54,25 @@ def main():
     clock = pygame.time.Clock()
     s = snake.Snake((255, 0, 0), (10, 10), looping=False)
     snack = cube.Cube(random_snack(rows, s), color=first_color)
-    run = True
+    game_state = "run"
+    game_tick = 10
 
-    while run:
+    while game_state == "run":
         keys = pygame.key.get_pressed()
-        clock.tick(10)
+        clock.tick(game_tick)
         redraw_window(win)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
+                game_state = "quit"
 
-        # press "a" to add cubes
         for key in keys:
+            # press "a" to add cubes
             if keys[pygame.K_a]:
                 s.add_cube((255, 0, 0), average=True)
-                clock.tick(2)
                 break
+            if keys[pygame.K_p]:
+                game_state = "pause"
+                
 
         # if head is on snack add cube and make new snack
         if s.body[0].pos == snack.pos:
