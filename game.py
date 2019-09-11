@@ -85,6 +85,7 @@ def main():
                 break
         # lose cond
         if s.head.pos[0] < 0 or s.head.pos[0] > rows - 1 or s.head.pos[1] < 0 or s.head.pos[1] > rows - 1:
+            print('Score: ', len(s.body))
             s.reset((10, 10))
         s.move()
         redraw_window(win)
