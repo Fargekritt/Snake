@@ -45,8 +45,7 @@ def random_snack(rows, item):
         else:
             break
     return (x, y)
-def initialization():
-    pass
+
 
 def main():
     global s, snack
@@ -73,7 +72,6 @@ def main():
                 break
             if keys[pygame.K_p]:
                 game_state = "pause"
-                
 
         # if head is on snack add cube and make new snack
         if s.body[0].pos == snack.pos:
